@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skin Care Clinic & Hair Transplant Centre | Dr. Anil Mohite</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #8b1a1a;
+    --dark-maroon: #5c0f0f;
+    --gold: #c9a227;
+    --cream: #fdf8f0;
+    --white: #ffffff;
+    --dark: #1c1c1c;
+    --gray: #666;
+    --light-gray: #f5f5f5;
+    --border: #e8ddd0;
+    --teal: #2a7b7b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; color: var(--dark); background: var(--white); }
+
+  /* TOP BAR */
+  .top-bar {
+    background: var(--dark-maroon); color: rgba(255,255,255,0.85);
+    padding: 0.5rem 5%; font-size: 0.78rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .top-bar a { color: var(--gold); text-decoration: none; }
+
+  /* NAV */
+  nav {
+    background: var(--white); padding: 0 5%;
+    border-bottom: 3px solid var(--maroon);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 80px; }
+  .logo { display: flex; align-items: center; gap: 1rem; }
+  .logo-icon { width: 56px; height: 56px; background: var(--maroon); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
+  .logo-text h1 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--dark); }
+  .logo-text p { font-size: 0.7rem; color: var(--maroon); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 0.1rem; }
+  .nav-menu { display: flex; gap: 0; list-style: none; }
+  .nav-menu > li { position: relative; }
+  .nav-menu > li > a {
+    display: block; padding: 1.5rem 1.2rem;
+    color: var(--dark); text-decoration: none; font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.5px; transition: color 0.3s; position: relative;
+  }
+  .nav-menu > li > a::after {
+    content: ''; position: absolute; bottom: 0; left: 1.2rem; right: 1.2rem;
+    height: 3px; background: var(--maroon); transform: scaleX(0); transition: transform 0.3s;
+  }
+  .nav-menu > li:hover > a::after, .nav-menu > li > a.active::after { transform: scaleX(1); }
+  .nav-menu > li:hover > a { color: var(--maroon); }
+
+  /* Dropdown */
+  .dropdown {
+    position: absolute; top: 100%; left: 0; width: 220px;
+    background: white; border-top: 3px solid var(--maroon);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s;
+    list-style: none; z-index: 200;
+  }
+  .nav-menu > li:hover .dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown li a {
+    display: block; padding: 0.75rem 1.2rem;
+    color: var(--dark); text-decoration: none; font-size: 0.82rem;
+    border-bottom: 1px solid var(--border); transition: all 0.2s;
+  }
+  .dropdown li a:hover { background: var(--cream); color: var(--maroon); padding-left: 1.6rem; }
+  .nav-donate {
+    background: var(--maroon); color: white; padding: 0.7rem 1.8rem;
+    font-size: 0.82rem; font-weight: 600; border: none; cursor: pointer;
+    font-family: 'Source Sans 3', sans-serif; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .nav-donate:hover { background: var(--dark-maroon); }
+
+  /* SEARCH BAR */
+  .search-bar { background: var(--cream); padding: 0.8rem 5%; border-bottom: 1px solid var(--border); display: flex; gap: 0.5rem; align-items: center; }
+  .search-bar input { flex: 1; max-width: 500px; padding: 0.6rem 1rem; border: 1px solid var(--border); font-size: 0.88rem; font-family: 'Source Sans 3', sans-serif; background: white; }
+  .search-bar button { background: var(--maroon); color: white; padding: 0.6rem 1.5rem; border: none; cursor: pointer; font-size: 0.85rem; }
+  .search-bar span { font-size: 0.8rem; color: var(--gray); }
+
+  /* HERO SLIDER */
+  .hero { position: relative; overflow: hidden; height: 520px; }
+  .hero-slides { display: flex; transition: transform 0.8s ease; height: 100%; }
+  .hslide { min-width: 100%; height: 100%; position: relative; display: flex; align-items: center; }
+  .hslide-bg { position: absolute; inset: 0; }
+  .hs1 .hslide-bg { background: linear-gradient(135deg, #8b1a1a 0%, #5c0f0f 50%, #3a0808 100%); }
+  .hs2 .hslide-bg { background: linear-gradient(135deg, #2a4a3a 0%, #1a3a2a 50%, #0f2a1a 100%); }
+  .hs3 .hslide-bg { background: linear-gradient(135deg, #1a2a4a 0%, #0f1a3a 50%, #080f28 100%); }
+  .hslide-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+  .hslide-inner { position: relative; z-index: 2; padding: 0 8%; max-width: 650px; }
+  .hslide-badge {
+    display: inline-block; background: var(--gold); color: var(--dark);
+    padding: 0.3rem 1rem; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.2rem;
+  }
+  .hslide-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); color: white; line-height: 1.2; margin-bottom: 1rem; }
+  .hslide-text { color: rgba(255,255,255,0.8); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+  .hslide-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-white { background: white; color: var(--maroon); padding: 0.8rem 2rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: none; cursor: pointer; transition: all 0.3s; font-family: 'Source Sans 3', sans-serif; text-decoration: none; display: inline-block; }
+  .btn-white:hover { background: var(--gold); color: white; }
+  .btn-gold { background: var(--gold); color: white; padding: 0.8rem 2rem; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: none; cursor: pointer; transition: all 0.3s; font-family: 'Source Sans 3', sans-serif; text-decoration: none; display: inline-block; }
+  .btn-gold:hover { background: #a87c1a; }
+
+  /* Hero Controls */
+  .hero-ctrl { position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.6rem; z-index: 10; }
+  .hd { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+  .hd.active { background: var(--gold); border-color: var(--gold); }
+  .hero-prev, .hero-next { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.5); color: white; width: 48px; height: 48px; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+  .hero-prev { left: 2rem; }
+  .hero-next { right: 2rem; }
+  .hero-prev:hover, .hero-next:hover { background: var(--maroon); border-color: var(--maroon); }
+
+  /* QUICK LINKS */
+  .quick-links { background: var(--maroon); display: grid; grid-template-columns: repeat(5, 1fr); }
+  .ql-item { padding: 1.5rem 1.2rem; text-align: center; border-right: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: background 0.3s; }
+  .ql-item:hover { background: var(--dark-maroon); }
+  .ql-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+  .ql-label { font-size: 0.75rem; color: rgba(255,255,255,0.9); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+
+  /* ABOUT SECTION */
+  .about { padding: 5rem 8%; background: var(--white); }
+  .about-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 4rem; align-items: center; }
+  .doc-card { background: var(--cream); border: 1px solid var(--border); position: relative; }
+  .doc-card-img { height: 360px; background: linear-gradient(160deg, var(--maroon) 0%, var(--dark-maroon) 100%); display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+  .doc-card-info { padding: 1.5rem 2rem; background: white; border-top: 4px solid var(--maroon); }
+  .doc-card-info h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--dark); }
+  .doc-card-info p { font-size: 0.8rem; color: var(--maroon); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem; font-weight: 600; }
+  .doc-card-info .doc-exp { display: flex; gap: 1.5rem; margin-top: 1rem; }
+  .doc-exp-item span:first-child { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--maroon); display: block; }
+  .doc-exp-item span:last-child { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+  .about-content h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--dark); margin-bottom: 1.5rem; line-height: 1.3; }
+  .about-content h2 span { color: var(--maroon); }
+  .about-content p { color: var(--gray); line-height: 1.9; margin-bottom: 1rem; font-size: 0.95rem; }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+  .af-item { display: flex; gap: 0.8rem; align-items: flex-start; padding: 1rem; background: var(--cream); border-left: 3px solid var(--gold); }
+  .af-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .af-text { font-size: 0.85rem; color: var(--dark); font-weight: 600; }
+  .af-text small { display: block; color: var(--gray); font-weight: 400; font-size: 0.78rem; margin-top: 0.2rem; }
+
+  /* SERVICES ACCORDION */
+  .services { padding: 5rem 8%; background: var(--light-gray); }
+  .services-header { text-align: center; margin-bottom: 3rem; }
+  .services-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--dark); }
+  .services-header h2 span { color: var(--maroon); }
+  .services-header p { color: var(--gray); margin-top: 0.8rem; font-size: 0.95rem; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .svc-card {
+    background: white; border: 1px solid var(--border); overflow: hidden;
+    transition: all 0.3s; cursor: pointer;
+    border-top: 4px solid transparent;
+  }
+  .svc-card:hover { border-top-color: var(--maroon); box-shadow: 0 8px 30px rgba(0,0,0,0.1); transform: translateY(-4px); }
+  .svc-card-inner { padding: 2rem 1.8rem; }
+  .svc-card .svc-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .svc-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--dark); margin-bottom: 0.7rem; }
+  .svc-card p { font-size: 0.84rem; color: var(--gray); line-height: 1.7; }
+  .svc-card .svc-more { display: flex; align-items: center; gap: 0.3rem; color: var(--maroon); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 1.2rem; }
+
+  /* PRACTO SECTION */
+  .practo-section { background: var(--maroon); padding: 3rem 8%; display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .practo-text h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: white; }
+  .practo-text p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; font-size: 0.9rem; }
+  .practo-badge { background: white; padding: 0.6rem 1.8rem; color: var(--maroon); font-weight: 700; font-size: 0.88rem; text-decoration: none; display: inline-block; letter-spacing: 1px; transition: all 0.3s; }
+  .practo-badge:hover { background: var(--gold); color: white; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 5rem 8%; background: white; }
+  .test-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+  .test-header h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--dark); }
+  .test-header h2 span { color: var(--maroon); }
+  .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .tcard { padding: 2rem; border: 1px solid var(--border); position: relative; background: var(--cream); transition: all 0.3s; }
+  .tcard:hover { box-shadow: 0 8px 30px rgba(139,26,26,0.1); border-color: var(--maroon); }
+  .tcard::before { content: '"'; font-family: 'Playfair Display', serif; font-size: 5rem; color: var(--gold); opacity: 0.3; position: absolute; top: 0.5rem; left: 1.5rem; line-height: 1; }
+  .tcard-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 1rem; }
+  .tcard p { font-size: 0.9rem; color: var(--dark); line-height: 1.8; font-style: italic; }
+  .tcard-author { display: flex; align-items: center; gap: 0.8rem; margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border); }
+  .tcard-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--maroon); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.1rem; }
+  .tcard-name { font-weight: 700; font-size: 0.88rem; color: var(--dark); }
+  .tcard-loc { font-size: 0.75rem; color: var(--gray); }
+
+  /* APPOINTMENT */
+  .appointment { padding: 5rem 8%; background: var(--cream); }
+  .appt-layout { display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; }
+  .appt-form-wrap h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--dark); margin-bottom: 2rem; }
+  .appt-form-wrap h2 span { color: var(--maroon); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .fgroup { margin-bottom: 1.2rem; }
+  .fgroup label { display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); margin-bottom: 0.4rem; }
+  .fgroup input, .fgroup select, .fgroup textarea { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border); font-size: 0.88rem; font-family: 'Source Sans 3', sans-serif; background: white; outline: none; transition: border-color 0.3s; }
+  .fgroup input:focus, .fgroup select:focus, .fgroup textarea:focus { border-color: var(--maroon); }
+  .submit-btn { background: var(--maroon); color: white; padding: 1rem 3rem; font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; border: none; cursor: pointer; width: 100%; font-family: 'Source Sans 3', sans-serif; transition: background 0.3s; }
+  .submit-btn:hover { background: var(--dark-maroon); }
+  .appt-aside { display: flex; flex-direction: column; gap: 1.5rem; }
+  .appt-aside h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--dark); }
+  .info-row { display: flex; gap: 1rem; align-items: flex-start; background: white; padding: 1.2rem; border-left: 4px solid var(--maroon); }
+  .ir-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .ir-label { font-size: 0.68rem; color: var(--maroon); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .ir-val { font-size: 0.88rem; color: var(--dark); margin-top: 0.2rem; line-height: 1.5; }
+  .fee-box { background: var(--maroon); color: white; padding: 1.5rem; text-align: center; }
+  .fee-box .fee-amt { font-family: 'Playfair Display', serif; font-size: 2.5rem; }
+  .fee-box .fee-lbl { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: rgba(255,255,255,0.7); }
+  .footer-main { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding: 4rem 8%; }
+  .footer-brand h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.84rem; line-height: 1.8; }
+  .footer-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 1.2rem; font-weight: 700; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.6rem; }
+  .footer-col ul li a { color: rgba(255,255,255,0.6); font-size: 0.85rem; text-decoration: none; transition: color 0.3s; }
+  .footer-col ul li a:hover { color: var(--gold); }
+  .footer-bottom { background: #111; padding: 1.2rem 8%; display: flex; justify-content: space-between; font-size: 0.78rem; align-items: center; }
+  .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .about-inner, .appt-layout, .services-grid, .test-grid, .form-row { grid-template-columns: 1fr; }
+    .footer-main { grid-template-columns: 1fr 1fr; }
+    .quick-links { grid-template-columns: repeat(3, 1fr); }
+    .nav-menu { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span>📍 Arera Colony, Bhopal, Madhya Pradesh</span>
+  <span>Available on <a href="#">Practo</a> · 16 Years of Expert Care</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <div class="logo-icon">💆</div>
+      <div class="logo-text">
+        <h1>Skin Care Clinic & Hair Transplant Centre</h1>
+        <p>Dr. Anil Mohite · Dermatologist · Bhopal</p>
+      </div>
+    </div>
+    <ul class="nav-menu">
+      <li>
+        <a href="#about">About Us</a>
+      </li>
+      <li>
+        <a href="#services">Services ▾</a>
+        <ul class="dropdown">
+          <li><a href="#">Skin Treatments</a></li>
+          <li><a href="#">Hair Transplant</a></li>
+          <li><a href="#">Laser Therapy</a></li>
+          <li><a href="#">Acne Care</a></li>
+          <li><a href="#">Scalp Treatments</a></li>
+        </ul>
+      </li>
+      <li><a href="#testimonials">Patients</a></li>
+      <li><a href="#appointment">Contact</a></li>
+    </ul>
+    <button class="nav-donate" onclick="document.getElementById('appointment').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  </div>
+</nav>
+
+<!-- SEARCH BAR -->
+<div class="search-bar">
+  <span>🔍</span>
+  <input type="text" placeholder="Search treatments, conditions, services...">
+  <button>Search</button>
+</div>
+
+<!-- HERO SLIDER -->
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hslide hs1">
+      <div class="hslide-bg"></div>
+      <div class="hslide-overlay"></div>
+      <div class="hslide-inner">
+        <div class="hslide-badge">16 Years of Excellence</div>
+        <h2 class="hslide-title">Expert Dermatology &<br>Hair Restoration</h2>
+        <p class="hslide-text">Bhopal's trusted name in skin care and hair transplant surgery. Dr. Anil Mohite combines clinical expertise with compassionate patient care.</p>
+        <div class="hslide-btns">
+          <a class="btn-white" href="#appointment">Book Appointment</a>
+          <a class="btn-gold" href="#services">Our Treatments</a>
+        </div>
+      </div>
+    </div>
+    <div class="hslide hs2">
+      <div class="hslide-bg"></div>
+      <div class="hslide-overlay"></div>
+      <div class="hslide-inner">
+        <div class="hslide-badge">Advanced Hair Transplant</div>
+        <h2 class="hslide-title">Restore Your Hair,<br>Restore Your Confidence</h2>
+        <p class="hslide-text">State-of-the-art FUE and FUT hair transplant techniques delivering natural, permanent results with minimal downtime.</p>
+        <div class="hslide-btns">
+          <a class="btn-white" href="#services">Hair Transplant Info</a>
+          <a class="btn-gold" href="#appointment">Free Consultation</a>
+        </div>
+      </div>
+    </div>
+    <div class="hslide hs3">
+      <div class="hslide-bg"></div>
+      <div class="hslide-overlay"></div>
+      <div class="hslide-inner">
+        <div class="hslide-badge">Comprehensive Skin Care</div>
+        <h2 class="hslide-title">Healthy Skin,<br>Healthy Life</h2>
+        <p class="hslide-text">From acne to advanced cosmetic procedures — personalized skin care plans designed for lasting results at affordable consultation fees.</p>
+        <div class="hslide-btns">
+          <a class="btn-white" href="#about">Meet Dr. Mohite</a>
+          <a class="btn-gold" href="#testimonials">Patient Reviews</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="hero-prev" onclick="hPrev()">&#8592;</button>
+  <button class="hero-next" onclick="hNext()">&#8594;</button>
+  <div class="hero-ctrl">
+    <div class="hd active" onclick="hGo(0)"></div>
+    <div class="hd" onclick="hGo(1)"></div>
+    <div class="hd" onclick="hGo(2)"></div>
+  </div>
+</div>
+
+<!-- QUICK LINKS -->
+<div class="quick-links">
+  <div class="ql-item" onclick="document.getElementById('appointment').scrollIntoView({behavior:'smooth'})">
+    <div class="ql-icon">📅</div>
+    <div class="ql-label">Book Appointment</div>
+  </div>
+  <div class="ql-item" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
+    <div class="ql-icon">💆</div>
+    <div class="ql-label">Hair Transplant</div>
+  </div>
+  <div class="ql-item" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">
+    <div class="ql-icon">✨</div>
+    <div class="ql-label">Skin Treatments</div>
+  </div>
+  <div class="ql-item" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <div class="ql-icon">👨‍⚕️</div>
+    <div class="ql-label">About Doctor</div>
+  </div>
+  <div class="ql-item">
+    <div class="ql-icon">📍</div>
+    <div class="ql-label">Find Us</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="about" id="about">
+  <div class="about-inner">
+    <div class="doc-card">
+      <div class="doc-card-img">👨‍⚕️</div>
+      <div class="doc-card-info">
+        <h3>Dr. Anil Mohite</h3>
+        <p>MBBS · MD Dermatology & STD</p>
+        <div class="doc-exp">
+          <div class="doc-exp-item">
+            <span>16+</span><span>Years Exp.</span>
+          </div>
+          <div class="doc-exp-item">
+            <span>₹300</span><span>Consultation</span>
+          </div>
+          <div class="doc-exp-item">
+            <span>4.8★</span><span>Practo Rating</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-content">
+      <h2>Bhopal's Trusted <span>Skin & Hair</span> Specialist</h2>
+      <p>Dr. Anil Mohite is a highly qualified dermatologist with over 16 years of extensive clinical experience in skin diseases, hair disorders, and cosmetic dermatology. Based at Arera Colony, Bhopal, his clinic has earned a reputation for excellence and patient-centric care.</p>
+      <p>Dr. Mohite is particularly renowned for his expertise in hair transplant surgery, offering both FUE (Follicular Unit Extraction) and advanced scalp restoration techniques that deliver natural-looking, permanent results.</p>
+      <div class="about-features">
+        <div class="af-item">
+          <div class="af-icon">🔬</div>
+          <div class="af-text">Advanced Diagnostics<small>Accurate, fast diagnostic testing</small></div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon">💇</div>
+          <div class="af-text">Hair Transplant FUE<small>Natural, permanent hair restoration</small></div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon">✨</div>
+          <div class="af-text">Cosmetic Procedures<small>Anti-aging & skin brightening</small></div>
+        </div>
+        <div class="af-item">
+          <div class="af-icon">🌿</div>
+          <div class="af-text">Chronic Conditions<small>Psoriasis, eczema management</small></div>
+        </div>
+      </div>
+      <a class="btn-white" style="background:var(--maroon);color:white;" href="#appointment">Schedule Consultation →</a>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services" id="services">
+  <div class="services-header">
+    <h2>Our <span>Treatments</span> & Services</h2>
+    <p>Comprehensive skin and hair care solutions with evidence-based treatments</p>
+  </div>
+  <div class="services-grid">
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">💇</div>
+        <h3>Hair Transplant Surgery</h3>
+        <p>Advanced FUE and FUT techniques for permanent hair restoration. Natural results with minimal scarring and quick recovery.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">✨</div>
+        <h3>Acne & Scar Treatment</h3>
+        <p>Comprehensive acne management and scar revision using laser, chemical peels, and latest dermatological protocols.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">🌿</div>
+        <h3>Eczema & Psoriasis Care</h3>
+        <p>Evidence-based chronic condition management to improve quality of life and achieve long-term remission.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">💆</div>
+        <h3>Scalp Treatments</h3>
+        <p>Dandruff, alopecia, and scalp infection treatments to restore scalp health and promote healthy hair growth.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">💊</div>
+        <h3>Fungal Infections</h3>
+        <p>Accurate diagnosis and targeted antifungal therapy for all types of fungal skin and nail infections.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-card-inner">
+        <div class="svc-icon">🔆</div>
+        <h3>Laser Skin Therapy</h3>
+        <p>Advanced laser treatments for pigmentation, warts, skin rejuvenation, and hair removal procedures.</p>
+        <div class="svc-more">Learn More →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTO BANNER -->
+<div class="practo-section">
+  <div class="practo-text">
+    <h3>Now Available on Practo</h3>
+    <p>Book your appointment online through Practo for seamless, hassle-free scheduling</p>
+  </div>
+  <a class="practo-badge" href="#">View on Practo →</a>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials" id="testimonials">
+  <div class="test-header">
+    <div>
+      <h2>What Our <span>Patients</span> Say</h2>
+    </div>
+  </div>
+  <div class="test-grid">
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"Dr. Mohite's hair transplant results exceeded my expectations. The procedure was smooth and the new hair growth looks completely natural. Best decision I ever made."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">👨</div>
+        <div>
+          <div class="tcard-name">Vikram Singh</div>
+          <div class="tcard-loc">Arera Colony, Bhopal</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"I had severe psoriasis for years. After Dr. Mohite's treatment plan, my skin has improved remarkably. Very affordable at just ₹300 and highly professional service."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">👩</div>
+        <div>
+          <div class="tcard-name">Sunita Patel</div>
+          <div class="tcard-loc">Bhopal, MP</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p>"Excellent dermatologist. He correctly diagnosed my skin condition after multiple failed treatments elsewhere. The clinic is clean, well-equipped, and the staff is very helpful."</p>
+      <div class="tcard-author">
+        <div class="tcard-avatar">👨</div>
+        <div>
+          <div class="tcard-name">Rahul Khanna</div>
+          <div class="tcard-loc">MP Nagar, Bhopal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPOINTMENT -->
+<div class="appointment" id="appointment">
+  <div class="appt-layout">
+    <div class="appt-form-wrap">
+      <h2>Book Your <span>Appointment</span></h2>
+      <div class="form-row">
+        <div class="fgroup">
+          <label>First Name</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="fgroup">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+91 XXXXX XXXXX">
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Email Address</label>
+        <input type="email" placeholder="email@example.com">
+      </div>
+      <div class="fgroup">
+        <label>Service Required</label>
+        <select>
+          <option>Select Service</option>
+          <option>Hair Transplant Consultation</option>
+          <option>Skin Treatment</option>
+          <option>Acne / Scar Treatment</option>
+          <option>Scalp Treatment</option>
+          <option>Laser Therapy</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="fgroup">
+          <label>Preferred Date</label>
+          <input type="date">
+        </div>
+        <div class="fgroup">
+          <label>Preferred Time</label>
+          <select>
+            <option>Morning (9AM–1PM)</option>
+            <option>Afternoon (1PM–5PM)</option>
+            <option>Evening (5PM–7PM)</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgroup">
+        <label>Describe Your Concern</label>
+        <textarea rows="3" placeholder="Briefly describe your symptoms or concern..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="alert('Appointment booked! We will confirm within 2 hours.')">Submit Appointment Request</button>
+    </div>
+    <div class="appt-aside">
+      <h3>Clinic Information</h3>
+      <div class="info-row">
+        <div class="ir-icon">📍</div>
+        <div>
+          <div class="ir-label">Address</div>
+          <div class="ir-val">Arera Colony, Bhopal<br>Madhya Pradesh</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ir-icon">⏰</div>
+        <div>
+          <div class="ir-label">Clinic Hours</div>
+          <div class="ir-val">Mon–Sat: 9:00 AM – 7:00 PM<br>Sunday: Closed</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="ir-icon">🌐</div>
+        <div>
+          <div class="ir-label">Online Booking</div>
+          <div class="ir-val">Available on Practo</div>
+        </div>
+      </div>
+      <div class="fee-box">
+        <div class="fee-amt">₹300</div>
+        <div class="fee-lbl">Consultation Fee</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <h3>Skin Care Clinic & Hair Transplant Centre</h3>
+      <p>Providing expert dermatological care and hair restoration in Bhopal for over 16 years. Dr. Anil Mohite is dedicated to delivering the best skin and hair health outcomes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Hair Transplant</a></li>
+        <li><a href="#">Acne Treatment</a></li>
+        <li><a href="#">Laser Therapy</a></li>
+        <li><a href="#">Scalp Care</a></li>
+        <li><a href="#">Psoriasis</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Doctor</a></li>
+        <li><a href="#services">Treatments</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#appointment">Appointment</a></li>
+        <li><a href="#">Practo Profile</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Arera Colony, Bhopal</a></li>
+        <li><a href="#">Book via Practo</a></li>
+        <li><a href="#">Mon–Sat 9AM–7PM</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Skin Care Clinic & Hair Transplant Centre, Bhopal</span>
+    <a href="#">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  let hCur = 0;
+  const hSlides = document.getElementById('heroSlides');
+  const hDots = document.querySelectorAll('.hd');
+  function hGo(n) { hCur = n; hSlides.style.transform = `translateX(-${hCur * 100}%)`; hDots.forEach((d,i) => d.classList.toggle('active', i===hCur)); }
+  function hNext() { hGo((hCur + 1) % 3); }
+  function hPrev() { hGo((hCur - 1 + 3) % 3); }
+  setInterval(hNext, 5500);
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }});
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.svc-card, .tcard, .af-item').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
